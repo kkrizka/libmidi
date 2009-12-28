@@ -1,5 +1,7 @@
 #include "MIDIChannelEvent.h"
 
+#include "MIDIDefines.h"
+
 #include <iostream>
 #include <iomanip>
 using namespace std;
@@ -40,28 +42,41 @@ void MIDIChannelEvent::debug()
 {
   switch(_type)
     {
-    case 0x0:
+    case MIDI_CHEVENT_INVALID:
       cout << "\tInvalid MIDI Channel Event" << endl;
       break;
-    case 0x8:
+    case MIDI_CHEVENT_NOTEOFF:
       cout << "\tEnd Note " << setbase(10) << _param1 << endl;
       cout << "\t\tVelocity: " << setbase(10) << _param2 << endl;
       break;
-    case 0x9:
+    case MIDI_CHEVENT_NOTEON:
       cout << "\tStart Note " << setbase(10) << _param1 << endl;
       cout << "\t\tVelocity: " << setbase(10) << _param2 << endl;
       break;
-    case 0xB:
+    case MIDI_CHEVENT_NOTEAFTERTOUCH:
+      cout << "\tNote Aftertouch" << setbase(10) << _param1 << endl;
+      cout << "\t\tValue: " << setbase(10) << _param2 << endl;
+      break;
+    case MIDI_CHEVENT_CONTROLLER:
       cout << "\tController Event" << endl;
       cout << "\t\tChannel: " << setbase(10) << _channel << endl;
       cout << "\t\tType: 0x" << setbase(16) << _param1 << endl;
       cout << "\t\tValue: 0x" << setbase(16) << _param2 << endl;
       break;
-    case 0xC:
+    case MIDI_CHEVENT_PROGRAMCHANGE:
       cout << "\tProgram Change to " << setbase(10) << _param1 << endl;
       break;
+    case MIDI_CHEVENT_CHANNELAFTERTOUCH:
+      cout << "\tChannel Aftertouch" << endl;
+      cout << "\t\tValue: " << setbase(10) << _param1 << endl;
+      break;
+    case MIDI_CHEVENT_PITCHBEND:
+      cout << "\tPitch Bend" << endl;
+      cout << "\t\tPitch Value (MSB): " << setbase(10) << _param1 << endl;
+      cout << "\t\tPitch Value (LSB): " << setbase(10) << _param2 << endl;
+      break;
     default:
-      cout << "\tMIDI Channel Event" << endl;
+      cout << "\tUnknown MIDI Channel Event" << endl;
       cout << "\t\tType: 0x" << setbase(16) << _type << endl;
       cout << "\t\tChannel: " << setbase(10) << _channel << endl;
       cout << "\t\tParam 1: 0x" << setbase(16) << _param1 << endl;

@@ -1,5 +1,8 @@
 #include "MIDITrack.h"
 
+#include "MIDIChannelControllerEvent.h"
+#include "MIDIDefines.h"
+
 #include <iostream>
 #include <iomanip>
 using namespace std;
@@ -75,9 +78,18 @@ MIDITrack::MIDITrack(char* data,dword size)
 	      }
 
 	    // Store the event
-	    MIDIChannelEvent event(deltaTime,type,channel,param1,param2);
-	    event.debug(); //print
-	    _channelEvents.push_back(event);
+	    if(type==MIDI_CHEVENT_CONTROLLER)
+	      {
+		MIDIChannelControllerEvent event=MIDIChannelControllerEvent(deltaTime,channel,param1,param2);
+		event.debug(); //print
+		_channelEvents.push_back(event);
+	      }
+	    else
+	      {
+		MIDIChannelEvent event(deltaTime,type,channel,param1,param2);
+		event.debug(); //print
+		_channelEvents.push_back(event);
+	      }
 
 	    lastMIDIType=type;
 	    lastChannel=channel;
@@ -190,24 +202,4 @@ void MIDITrack::handleMetaEvent(int type,int data[],int length)
       cout << "\t" << "Meta Event Type 0x" << setbase(16) << type << setbase(10) << endl;
       break;
     }
-}
-
-void MIDITrack::handleControllerEvent(int type,int value)
-{
-  switch(type)
-    {
-    case 0x7:
-      cout << "\tMain Volume" << endl;
-      break;
-    case 0xa:
-      cout << "\tPan" << endl;
-      break;
-    case 0x5D:
-      cout << "\tEffect 3 Depth (Chorus Depth)" << endl;
-      break;
-    default:
-      cout << "\tController Event 0x" << setbase(16) << type << endl;
-      break;
-    }
-  cout << "\t\tValue: " << setbase(10) << value << endl;
 }
