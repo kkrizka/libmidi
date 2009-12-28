@@ -32,17 +32,17 @@ void MIDIChannelControllerEvent::debug()
 {
   switch(_controllertype)
     {
-    case 0x7:
+    case MIDI_CHEVENT_CONTROLLER_MAINVOLUME:
       cout << "\tMain Volume" << endl;
       break;
-    case 0xa:
+    case MIDI_CHEVENT_CONTROLLER_PAN:
       cout << "\tPan" << endl;
       break;
-    case 0x5D:
+    case MIDI_CHEVENT_CONTROLLER_EFFECT3DEPTH:
       cout << "\tEffect 3 Depth (Chorus Depth)" << endl;
       break;
     default:
-      cout << "\tController Event 0x" << setbase(16) << _controllertype << endl;
+      cout << "\tUnknown Controller Event 0x" << setbase(16) << _controllertype << endl;
       break;
     }
   cout << "\t\tValue: " << setbase(10) << _value << endl;
