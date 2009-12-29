@@ -28,6 +28,8 @@ SET(libmidireader_HEADERS
   MIDIMetaGenericEvent.h
   MIDIMetaTextEvent.h
   MIDIMetaNumberEvent.h 
+
+  types.h
   )
 
 ADD_LIBRARY(midireader SHARED ${libmidireader_SRCS})

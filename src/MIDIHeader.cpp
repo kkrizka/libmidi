@@ -10,9 +10,6 @@ MIDIHeader::MIDIHeader(byte* data,dword size)
   _formatType=byte2word(data);
   _nTracks=byte2word(data+2);
 
-  cout << "\tFormat Type: " << formatType() << endl;
-  cout << "\tNumber of Tracks: " << nTracks() << endl;
-  cout << "\tTime Division: " << timeDivisions() << endl;
 }
 
 int MIDIHeader::nTracks()

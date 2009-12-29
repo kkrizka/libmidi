@@ -36,9 +36,10 @@ void MIDIMetaNumberEvent::debug()
     case MIDI_METAEVENT_SETTEMPO:
       cout << "\tSet Tempo" << endl;
       cout << "\t\tMicroseconds/Quarter-note: " << number() << endl;
+      break;
     default:
       cout << "\tUnknown Meta Number Event 0x" << setbase(16) << (unsigned int)metaType() << endl;
-      cout << "\t\t" << _number;
+      cout << "\t\t" << _number << endl;
       break;
     }
 }

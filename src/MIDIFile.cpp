@@ -12,8 +12,23 @@ using namespace std;
 #include "types.h"
 
 MIDIFile::MIDIFile(string path)
-  : _path(path)
+  : _path(path),_header(0)
 { }
+
+unsigned int MIDIFile::numTracks()
+{
+  return _tracks.size();
+}
+
+MIDIHeader* MIDIFile::header()
+{
+  return _header;
+}
+
+MIDITrack* MIDIFile::track(unsigned int id)
+{
+  return _tracks[id];
+}
 
 MIDIChunk* MIDIFile::readChunk(ifstream& fh)
 {
@@ -49,13 +64,12 @@ bool MIDIFile::open()
   ifstream fh(_path.c_str(),ios::in | ios::binary);
   if(!fh.is_open()) return false; //Error check
 
-  cout << "Header" << endl;
-  MIDIHeader *header=(MIDIHeader*)readChunk(fh);
+  _header=(MIDIHeader*)readChunk(fh);
 
-  for(int i=0;i<header->nTracks();i++)
+  for(int i=0;i<_header->nTracks();i++)
     {
-      cout << "Track #" << i+1 << endl;
-      readChunk(fh);
+      MIDITrack* track=(MIDITrack*)readChunk(fh);
+      _tracks.push_back(track);
     }
 
   fh.close();

@@ -13,18 +13,18 @@ class MIDITrack : public MIDIChunk
 public:
   MIDITrack(byte* data,dword size);
 
+  unsigned int numEvents();
+  MIDIEvent* event(unsigned int id);
+
 private:
   dword readNextVariableLength();
   byte readNextByte();
-
-  void handleMetaEvent(int type,int data[],int length);
 
   byte* _data;
   dword _size;
   dword _pos;
 
-  vector<MIDIChannelEvent*> _channelEvents;
-  vector<MIDIMetaEvent*> _metaEvents;
+  vector<MIDIEvent*> _events;
 };
 
 #endif // MIDITRACK_H_

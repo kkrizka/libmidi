@@ -6,10 +6,6 @@
 #include "MIDIMetaNumberEvent.h"
 #include "MIDIDefines.h"
 
-#include <iostream>
-#include <iomanip>
-using namespace std;
-
 MIDITrack::MIDITrack(byte* data,dword size)
   : MIDIChunk(data,size),_data(data),_size(size),_pos(0)
 {
@@ -44,12 +40,12 @@ MIDITrack::MIDITrack(byte* data,dword size)
 		break;
 	      case MIDI_METAEVENT_SETTEMPO:
 		event=new MIDIMetaNumberEvent(deltaTime,type,data,length);
+		break;
 	      default:
 		event=new MIDIMetaGenericEvent(deltaTime,type,data,length);
 		break;
 	      }
-	    event->debug();
-	    _metaEvents.push_back(event);
+	    _events.push_back(event);
 
 	    //handleMetaEvent(type,data,length);
 	  }
@@ -63,8 +59,8 @@ MIDITrack::MIDITrack(byte* data,dword size)
 	      {
 		data[i]=readNextByte();
 	      }
-	    cout << "\tSystem Exclusive Event" << endl;
-	    // IGNOREx
+	    #warning "System Exclusive events are unimplemented"
+	    // IGNORE
 	  }
 	  break;
 	default:
@@ -107,8 +103,7 @@ MIDITrack::MIDITrack(byte* data,dword size)
 	    else
 	      event=new MIDIChannelEvent(deltaTime,type,channel,param1,param2);
 
-	    event->debug(); //print
-	    _channelEvents.push_back(event);
+	    _events.push_back(event);
 
 	    lastMIDIType=type;
 	    lastChannel=channel;
@@ -116,7 +111,16 @@ MIDITrack::MIDITrack(byte* data,dword size)
 	  break;
 	}
     }
-  cout << setbase(10);
+}
+
+unsigned int MIDITrack::numEvents()
+{
+  return _events.size();
+}
+
+MIDIEvent* MIDITrack::event(unsigned int id)
+{
+  return _events[id];
 }
 
 dword MIDITrack::readNextVariableLength()

@@ -2,6 +2,7 @@
 #define MIDIREADER_H_
 
 #include "MIDIDefines.h"
+#include "types.h"
 
 #include "MIDIFile.h"
 
