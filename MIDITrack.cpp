@@ -2,6 +2,7 @@
 
 #include "MIDIChannelControllerEvent.h"
 #include "MIDIMetaUnknownEvent.h"
+#include "MIDIMetaTextEvent.h"
 #include "MIDIDefines.h"
 
 #include <iostream>
@@ -34,6 +35,12 @@ MIDITrack::MIDITrack(byte* data,dword size)
 	    MIDIMetaEvent *event;
 	    switch(type)
 	      {
+	      case MIDI_METAEVENT_TEXT:
+	      case MIDI_METAEVENT_COPYRIGHT:
+	      case MIDI_METAEVENT_TRACKNAME:
+	      case MIDI_METAEVENT_MAKER:
+		event=new MIDIMetaTextEvent(deltaTime,type,data,length);
+		break;
 	      default:
 		event=new MIDIMetaUnknownEvent(deltaTime,type,data,length);
 		break;
@@ -151,32 +158,6 @@ void MIDITrack::handleMetaEvent(int type,int data[],int length)
 {
   switch(type)
     {
-    case 0x1:
-      {
-	//char* str=data2cstr(data,length);
-	cout << "\tText" << endl;
-	//cout << "\t\t" << str;
-      }
-      break;
-    case 0x2:
-      {
-	//char* str=data2cstr(data,length);
-	cout << "\tCopyright" << endl;
-	//cout << "\t\t" << str << endl;
-      }
-      break;
-    case 0x3:
-      {
-	//char* str=data2cstr(data,length);
-	//cout << "\tTrack Name: " << str << endl;
-      }
-      break;
-    case 0x6:
-      {
-	//char* str=data2cstr(data,length);
-	//cout << "\tMaker: " << str << endl;
-      }
-      break;
     case 0x51:
       {
 	int tempo=0;

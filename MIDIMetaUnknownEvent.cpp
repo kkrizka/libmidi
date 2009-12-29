@@ -28,5 +28,5 @@ int MIDIMetaUnknownEvent::dataLength()
 
 void MIDIMetaUnknownEvent::debug()
 {
-  cout << "\tUnknown Meta Event 0x" << setbase(16) << metaType() << endl;
+  cout << "\tUnknown Meta Event 0x" << setbase(16) << (unsigned int)metaType() << endl;
 }

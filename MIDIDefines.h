@@ -3,6 +3,10 @@
 
 // Meta event types
 #define MIDI_METAEVENT_INVALID 0x0
+#define MIDI_METAEVENT_TEXT 0x1
+#define MIDI_METAEVENT_COPYRIGHT 0x2
+#define MIDI_METAEVENT_TRACKNAME 0x3
+#define MIDI_METAEVENT_MAKER 0x6
 
 // Channel event types
 #define MIDI_CHEVENT_INVALID 0x0

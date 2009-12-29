@@ -14,16 +14,16 @@ MIDIMetaEvent::MIDIMetaEvent(const MIDIMetaEvent& o)
   : MIDIEvent(o),_metaType(o._metaType)
 { }
 
-MIDIMetaEvent::MIDIMetaEvent(int deltaTime,int metaType)
+MIDIMetaEvent::MIDIMetaEvent(dword deltaTime,byte metaType)
   : MIDIEvent(deltaTime),_metaType(metaType)
 { }
 
-int MIDIMetaEvent::metaType()
+byte MIDIMetaEvent::metaType()
 { 
   return _metaType;
 }
 
 void MIDIMetaEvent::debug()
 { 
-  cout << "\tInvalid Meta Event 0x" << setbase(16) << _metaType << endl;
+  cout << "\tInvalid Meta Event 0x" << setbase(16) << (unsigned int)_metaType << endl;
 }
