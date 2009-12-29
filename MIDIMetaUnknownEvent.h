@@ -1,6 +1,8 @@
 #ifndef MIDIMETAUNKNOWNEVENT_H_
 #define MIDIMETAUNKNOWNEVENT_H_
 
+#include "types.h"
+
 #include "MIDIMetaEvent.h"
 
 class MIDIMetaUnknownEvent : public MIDIMetaEvent
@@ -8,15 +10,15 @@ class MIDIMetaUnknownEvent : public MIDIMetaEvent
 public:
   MIDIMetaUnknownEvent();
   MIDIMetaUnknownEvent(const MIDIMetaUnknownEvent& o);
-  MIDIMetaUnknownEvent(int deltaTime,int type,int data[],int dataLength);
+  MIDIMetaUnknownEvent(dword deltaTime,byte type,byte data[],int dataLength);
 
-  int* data();
+  byte* data();
   int dataLength();
 
   virtual void debug();
 
 private:
-  int* _data;
+  byte* _data;
   int _dataLength;
 };
 

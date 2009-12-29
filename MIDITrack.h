@@ -11,17 +11,17 @@ using namespace std;
 class MIDITrack : public MIDIChunk
 {
 public:
-  MIDITrack(char* data,dword size);
+  MIDITrack(byte* data,dword size);
 
 private:
-  int readNextVariableLength();
-  int readNext();
+  dword readNextVariableLength();
+  byte readNextByte();
 
   void handleMetaEvent(int type,int data[],int length);
 
   char* data2cstr(int data[],int length);
 
-  char* _data;
+  byte* _data;
   dword _size;
   dword _pos;
 

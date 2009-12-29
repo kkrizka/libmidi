@@ -12,11 +12,11 @@ MIDIMetaUnknownEvent::MIDIMetaUnknownEvent(const MIDIMetaUnknownEvent& o)
   : MIDIMetaEvent(o),_data(o._data),_dataLength(o._dataLength)
 { }
 
-MIDIMetaUnknownEvent::MIDIMetaUnknownEvent(int deltaTime,int metaType,int data[],int dataLength)
+MIDIMetaUnknownEvent::MIDIMetaUnknownEvent(dword deltaTime,byte metaType,byte data[],int dataLength)
   : MIDIMetaEvent(deltaTime,metaType),_data(data),_dataLength(dataLength)
 { }
 
-int* MIDIMetaUnknownEvent::data()
+byte* MIDIMetaUnknownEvent::data()
 {
   return _data;
 }

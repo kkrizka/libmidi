@@ -1,13 +1,14 @@
 #include "MIDIHeader.h"
 
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
-MIDIHeader::MIDIHeader(char* data,dword size)
+MIDIHeader::MIDIHeader(byte* data,dword size)
   : MIDIChunk(data,size),_formatType(0),_nTracks(0),_timeDivisions(0)
 {
-  _formatType=char2word(data);
-  _nTracks=char2word(data+2);
+  _formatType=byte2word(data);
+  _nTracks=byte2word(data+2);
 
   cout << "\tFormat Type: " << formatType() << endl;
   cout << "\tNumber of Tracks: " << nTracks() << endl;

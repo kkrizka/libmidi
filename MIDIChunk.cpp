@@ -1,4 +1,4 @@
 #include "MIDIChunk.h"
 
-MIDIChunk::MIDIChunk(char* data, dword size)
+MIDIChunk::MIDIChunk(byte* data, dword size)
 { }

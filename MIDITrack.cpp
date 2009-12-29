@@ -8,27 +8,27 @@
 #include <iomanip>
 using namespace std;
 
-MIDITrack::MIDITrack(char* data,dword size)
+MIDITrack::MIDITrack(byte* data,dword size)
   : MIDIChunk(data,size),_data(data),_size(size),_pos(0)
 {
-  int lastMIDIType;
+  byte lastMIDIType;
   int lastChannel;
 
   while(_pos<_size)
     {
-      int deltaTime=readNextVariableLength();
-      int eventType=readNext();
+      dword deltaTime=readNextVariableLength();
+      byte eventType=readNextByte();
       
       switch(eventType)
 	{
 	case 0xFF: //Meta event
 	  {
-	    int type=readNext();
-	    int length=readNextVariableLength();
-	    int data[length];
+	    byte type=readNextByte();
+	    dword length=readNextVariableLength();
+	    byte data[length];
 	    for(int i=0;i<length;i++)
 	      {
-		data[i]=readNext();
+		data[i]=readNextByte();
 	      }
 
 	    MIDIMetaEvent *event;
@@ -47,11 +47,11 @@ MIDITrack::MIDITrack(char* data,dword size)
 	case 0xF0: // System Exclusive Events
 	case 0xF7:
 	  {
-	    int length=readNextVariableLength();
-	    int data[length];
+	    dword length=readNextVariableLength();
+	    byte data[length];
 	    for(int i=0;i<length;i++)
 	      {
-		data[i]=readNext();
+		data[i]=readNextByte();
 	      }
 	    cout << "\tSystem Exclusive Event" << endl;
 	    // IGNOREx
@@ -59,10 +59,10 @@ MIDITrack::MIDITrack(char* data,dword size)
 	  break;
 	default:
 	  { // Everything else is a channel event
-	    int type;
+	    byte type;
 	    int channel;
-	    int param1;
-	    int param2;
+	    byte param1;
+	    byte param2;
 
 	    if((eventType>>7)==1) // MSB of 1 indicates that the first 4 bits are the channel event type
 	      {
@@ -73,9 +73,9 @@ MIDITrack::MIDITrack(char* data,dword size)
 		 * 1 byte:param2
 		 */
 		type=(0xF0&eventType)>>4;
-		channel=0x0F&eventType;
-		param1=readNext();
-		param2=readNext();
+		channel=(int)(0x0F & eventType);
+		param1=readNextByte();
+		param2=readNextByte();
 	      }
 	    else // This is a running status, since MSB==0
 	      {
@@ -87,7 +87,7 @@ MIDITrack::MIDITrack(char* data,dword size)
 		type=lastMIDIType;
 		channel=lastChannel;
 		param1=eventType;
-		param2=readNext();
+		param2=readNextByte();
 	      }
 
 	    // Store the event
@@ -109,28 +109,29 @@ MIDITrack::MIDITrack(char* data,dword size)
   cout << setbase(10);
 }
 
-int MIDITrack::readNextVariableLength()
+dword MIDITrack::readNextVariableLength()
 {
-  int result=0;
-  int flag=0;
+  dword result=0;
+  bool flag=0;
   do
     {
-      int i=(int)_data[_pos];
-      int contribution=0x7F & i; // Ignore first bit, it is a flag
+      byte i=_data[_pos];
+      dword contribution=(dword)(0x7F & i); // Ignore first bit, it is a flag
+      // Shift down to make space for new bit
       result=(result<<7);
       result+=contribution;
 
-      flag=0x80 & i; // The first bit is 0 if this is the final contribution
+      flag=(0x80 & i); // The first bit is 0 if this is the final contribution
 
       _pos++;
-    } while(flag!=0);
+    } while(flag);
 
   return result;
 }
 
-int MIDITrack::readNext()
+byte MIDITrack::readNextByte()
 {
-  int result=char2num(_data[_pos]);
+  byte result=_data[_pos];
   _pos++;
   return result;
 }
@@ -152,28 +153,28 @@ void MIDITrack::handleMetaEvent(int type,int data[],int length)
     {
     case 0x1:
       {
-	char* str=data2cstr(data,length);
+	//char* str=data2cstr(data,length);
 	cout << "\tText" << endl;
-	cout << "\t\t" << str;
+	//cout << "\t\t" << str;
       }
       break;
     case 0x2:
       {
-	char* str=data2cstr(data,length);
+	//char* str=data2cstr(data,length);
 	cout << "\tCopyright" << endl;
-	cout << "\t\t" << str << endl;
+	//cout << "\t\t" << str << endl;
       }
       break;
     case 0x3:
       {
-	char* str=data2cstr(data,length);
-	cout << "\tTrack Name: " << str << endl;
+	//char* str=data2cstr(data,length);
+	//cout << "\tTrack Name: " << str << endl;
       }
       break;
     case 0x6:
       {
-	char* str=data2cstr(data,length);
-	cout << "\tMaker: " << str << endl;
+	//char* str=data2cstr(data,length);
+	//cout << "\tMaker: " << str << endl;
       }
       break;
     case 0x51:

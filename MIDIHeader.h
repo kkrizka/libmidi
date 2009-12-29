@@ -6,7 +6,7 @@
 class MIDIHeader : public MIDIChunk
 {
 public:
-  MIDIHeader(char* data,dword size);
+  MIDIHeader(byte* data,dword size);
 
   int formatType();
   int nTracks();
