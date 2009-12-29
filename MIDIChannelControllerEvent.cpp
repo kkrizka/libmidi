@@ -32,11 +32,17 @@ void MIDIChannelControllerEvent::debug()
 {
   switch(_controllertype)
     {
+    case MIDI_CHEVENT_CONTROLLER_BANKSELECT:
+      cout << "\tBank Select" << endl;
+      break;
     case MIDI_CHEVENT_CONTROLLER_MAINVOLUME:
       cout << "\tMain Volume" << endl;
       break;
     case MIDI_CHEVENT_CONTROLLER_PAN:
       cout << "\tPan" << endl;
+      break;
+    case MIDI_CHEVENT_CONTROLLER_LSBCONTROLLER0:
+      cout << "\tLSB For Controller 0" << endl;
       break;
     case MIDI_CHEVENT_CONTROLLER_EFFECT3DEPTH:
       cout << "\tEffect 3 Depth (Chorus Depth)" << endl;

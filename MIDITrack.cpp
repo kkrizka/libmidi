@@ -1,6 +1,7 @@
 #include "MIDITrack.h"
 
 #include "MIDIChannelControllerEvent.h"
+#include "MIDIMetaUnknownEvent.h"
 #include "MIDIDefines.h"
 
 #include <iostream>
@@ -29,7 +30,18 @@ MIDITrack::MIDITrack(char* data,dword size)
 	      {
 		data[i]=readNext();
 	      }
-	    handleMetaEvent(type,data,length);
+
+	    MIDIMetaEvent *event;
+	    switch(type)
+	      {
+	      default:
+		event=new MIDIMetaUnknownEvent(deltaTime,type,data,length);
+		break;
+	      }
+	    event->debug();
+	    _metaEvents.push_back(event);
+
+	    //handleMetaEvent(type,data,length);
 	  }
 	  break;
 	case 0xF0: // System Exclusive Events
@@ -51,6 +63,7 @@ MIDITrack::MIDITrack(char* data,dword size)
 	    int channel;
 	    int param1;
 	    int param2;
+
 	    if((eventType>>7)==1) // MSB of 1 indicates that the first 4 bits are the channel event type
 	      {
 		/*
@@ -78,18 +91,14 @@ MIDITrack::MIDITrack(char* data,dword size)
 	      }
 
 	    // Store the event
+	    MIDIChannelEvent *event=0;
 	    if(type==MIDI_CHEVENT_CONTROLLER)
-	      {
-		MIDIChannelControllerEvent event=MIDIChannelControllerEvent(deltaTime,channel,param1,param2);
-		event.debug(); //print
-		_channelEvents.push_back(event);
-	      }
+	      event=new MIDIChannelControllerEvent(deltaTime,channel,param1,param2);
 	    else
-	      {
-		MIDIChannelEvent event(deltaTime,type,channel,param1,param2);
-		event.debug(); //print
-		_channelEvents.push_back(event);
-	      }
+	      event=new MIDIChannelEvent(deltaTime,type,channel,param1,param2);
+
+	    event->debug(); //print
+	    _channelEvents.push_back(event);
 
 	    lastMIDIType=type;
 	    lastChannel=channel;

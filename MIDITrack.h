@@ -3,6 +3,7 @@
 
 #include "MIDIChunk.h"
 #include "MIDIChannelEvent.h"
+#include "MIDIMetaEvent.h"
 
 #include <vector>
 using namespace std;
@@ -18,16 +19,14 @@ private:
 
   void handleMetaEvent(int type,int data[],int length);
 
-  void handleControllerEvent(int type,int value);
-
   char* data2cstr(int data[],int length);
-  //int readEvent(int start,char* data,int size);
 
   char* _data;
   dword _size;
   dword _pos;
 
-  vector<MIDIChannelEvent> _channelEvents;
+  vector<MIDIChannelEvent*> _channelEvents;
+  vector<MIDIMetaEvent*> _metaEvents;
 };
 
 #endif // MIDITRACK_H_
