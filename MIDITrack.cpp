@@ -1,8 +1,9 @@
 #include "MIDITrack.h"
 
 #include "MIDIChannelControllerEvent.h"
-#include "MIDIMetaUnknownEvent.h"
+#include "MIDIMetaGenericEvent.h"
 #include "MIDIMetaTextEvent.h"
+#include "MIDIMetaNumberEvent.h"
 #include "MIDIDefines.h"
 
 #include <iostream>
@@ -41,8 +42,10 @@ MIDITrack::MIDITrack(byte* data,dword size)
 	      case MIDI_METAEVENT_MAKER:
 		event=new MIDIMetaTextEvent(deltaTime,type,data,length);
 		break;
+	      case MIDI_METAEVENT_SETTEMPO:
+		event=new MIDIMetaNumberEvent(deltaTime,type,data,length);
 	      default:
-		event=new MIDIMetaUnknownEvent(deltaTime,type,data,length);
+		event=new MIDIMetaGenericEvent(deltaTime,type,data,length);
 		break;
 	      }
 	    event->debug();
@@ -141,56 +144,4 @@ byte MIDITrack::readNextByte()
   byte result=_data[_pos];
   _pos++;
   return result;
-}
-
-char* MIDITrack::data2cstr(int data[],int length)
-{
-  char *result=new char[length+1];
-  for(int i=0;i<length;i++)
-    {
-      result[i]=num2char(data[i]);
-    }
-  result[length]='\0';
-  return result;
-}
-
-void MIDITrack::handleMetaEvent(int type,int data[],int length)
-{
-  switch(type)
-    {
-    case 0x51:
-      {
-	int tempo=0;
-	for(int i=0;i<3;i++)
-	  {
-	    tempo=(tempo<<8);
-	    tempo+=data[i];
-	  }
-	cout << "\tSet Tempo" << endl;
-	cout << "\t\tMicroseconds/Quarter-note: " << tempo << endl;
-      }
-      break;
-    case 0x21:
-      cout << "\tMIDI Port" << endl;
-      cout << "\t\tPort: " << data[0] << endl;
-      break;
-    case 0x58:
-      cout << "\tTime Signature" << endl;
-      cout << "\t\tNumerator: " << data[0] << endl;
-      cout << "\t\tDenominator: " << data[1] << endl;
-      cout << "\t\tMetronome: " << data[2] << endl;
-      cout << "\t\t32nds: " << data[3] << endl;
-      break;
-    case 0x59:
-      cout << "\tKey Signature" << endl;
-      cout << "\t\tKey: " << (int)num2char(data[0]) << endl;
-      cout << "\t\tScale: " << data[1] << endl;
-      break;
-    case 0x2F:
-      cout << "\tEnd of Track" << endl;
-      break;
-    default:
-      cout << "\t" << "Meta Event Type 0x" << setbase(16) << type << setbase(10) << endl;
-      break;
-    }
 }

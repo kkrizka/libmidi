@@ -6,14 +6,14 @@
 #include <iomanip>
 using namespace std;
 
-int char2num(char c)
+unsigned int char2num(char c)
 {
   int res=(int)c;
   if(res<0) res+=256;
   return res;
 }
 
-char num2char(int i)
+char num2char(unsigned int i)
 {
   if(i>=128)
     return (char)(i-256);

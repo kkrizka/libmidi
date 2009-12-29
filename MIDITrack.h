@@ -19,8 +19,6 @@ private:
 
   void handleMetaEvent(int type,int data[],int length);
 
-  char* data2cstr(int data[],int length);
-
   byte* _data;
   dword _size;
   dword _pos;
