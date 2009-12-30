@@ -8,9 +8,8 @@
 #include <vector>
 using namespace std;
 
+//! Tracks are sequences of events.
 /*!
- * Tracks are sequences of events.
- *
  * There are three types of events
  * <ul>
  *  <li>Meta events: Not sent to the synchronizer</li>

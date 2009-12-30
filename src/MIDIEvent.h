@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-//! A event inside a track
+//! An event inside a track
 /*!
  * A MIDI track is made out of events. This class is an abstract event.
  *
