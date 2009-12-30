@@ -11,11 +11,11 @@ MIDIEvent::MIDIEvent(const MIDIEvent& o)
   : _deltaTime(o._deltaTime)
 { }
 
-MIDIEvent::MIDIEvent(int deltaTime)
+MIDIEvent::MIDIEvent(dword deltaTime)
   : _deltaTime(deltaTime)
 { }
 
-int MIDIEvent::deltaTime()
+dword MIDIEvent::deltaTime()
 {
   return _deltaTime;
 }

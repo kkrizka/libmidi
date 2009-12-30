@@ -1,3 +1,8 @@
+/**
+ * \mainpage
+ * Main page
+ */
+
 #ifndef MIDIREADER_H_
 #define MIDIREADER_H_
 

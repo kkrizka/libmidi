@@ -18,11 +18,6 @@ MIDIMetaGenericEvent::MIDIMetaGenericEvent(dword deltaTime,byte metaType,byte da
   : MIDIMetaEvent(deltaTime,metaType),_data(data),_dataLength(dataLength)
 { }
 
-byte* MIDIMetaGenericEvent::data()
-{
-  return _data;
-}
-
 int MIDIMetaGenericEvent::dataLength()
 {
   return _dataLength;

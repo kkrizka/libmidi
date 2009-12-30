@@ -14,11 +14,11 @@ MIDIChannelEvent::MIDIChannelEvent(const MIDIChannelEvent& o)
   : MIDIEvent(o),_type(o._type),_channel(o._channel),_param1(o._param1),_param2(o._param2)
 { }
 
-MIDIChannelEvent::MIDIChannelEvent(int timeDelta,int type,int channel,int param1,int param2)
+MIDIChannelEvent::MIDIChannelEvent(dword timeDelta,byte type,int channel,int param1,int param2)
   : MIDIEvent(timeDelta),_type(type),_channel(channel),_param1(param1),_param2(param2)
 { }
 
-int MIDIChannelEvent::type()
+byte MIDIChannelEvent::type()
 {
   return _type;
 }
@@ -77,7 +77,7 @@ void MIDIChannelEvent::debug()
       break;
     default:
       cout << "\tUnknown MIDI Channel Event" << endl;
-      cout << "\t\tType: 0x" << setbase(16) << _type << endl;
+      cout << "\t\tType: 0x" << setbase(16) << (unsigned int)_type << endl;
       cout << "\t\tChannel: " << setbase(10) << _channel << endl;
       cout << "\t\tParam 1: 0x" << setbase(16) << _param1 << endl;
       cout << "\t\tParam 2: 0x" << setbase(16) << _param2 << endl;

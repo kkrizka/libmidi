@@ -1,6 +1,7 @@
 #include "MIDIReader.h"
 
 #include <iostream>
+#include <iomanip>
 using namespace std;
 
 int main(int argc,char* argv[])
@@ -18,7 +19,14 @@ int main(int argc,char* argv[])
   cout << "Header" << endl;
   cout << "\tFormat Type: " << header->formatType() << endl;
   cout << "\tNumber of Tracks: " << header->nTracks() << endl;
-  cout << "\tTime Division: " << header->timeDivisions() << endl;
+  
+  if(header->framesPerSecond())
+    {
+      cout << "\tFrames Per Second: " << header->framesPerSecond() << endl;
+      cout << "\tTicks Per Frame: " << header->ticksPerFrame() << endl;
+    }
+  else
+    cout << "\tTicks Per Beat: " << header->ticksPerBeat() << endl;
 
   for(int i=0;i<mid.numTracks();i++)
     {

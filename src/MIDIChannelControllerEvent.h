@@ -3,16 +3,32 @@
 
 #include "MIDIChannelEvent.h"
 
+/*!
+ * Controller events are special events that have a sub type and a value.
+ *
+ * See the MIDI specification for a complete list of contoller event types.
+ */
 class MIDIChannelControllerEvent : public MIDIChannelEvent
 {
 public:
+  //! Default Constructor
   MIDIChannelControllerEvent();
+  //! Copy Constructor
   MIDIChannelControllerEvent(const MIDIChannelControllerEvent& o);
-  MIDIChannelControllerEvent(int deltaTime,int channel,int controllertype,int value);
+  //! Constructor
+  MIDIChannelControllerEvent(dword deltaTime,int channel,int controllertype,int value);
 
+  /*!
+   * \return The sub type of this controller event
+   */
   int controllerType();
+
+  /*!
+   * \return Value held by this sub type
+   */
   int value();
 
+  //! Print debug information
   virtual void debug();
 
 private:

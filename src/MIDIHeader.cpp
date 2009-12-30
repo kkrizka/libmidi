@@ -9,7 +9,7 @@ MIDIHeader::MIDIHeader(byte* data,dword size)
 {
   _formatType=byte2word(data);
   _nTracks=byte2word(data+2);
-
+  _timeDivisions=byte2word(data+4);
 }
 
 int MIDIHeader::nTracks()
@@ -24,6 +24,26 @@ int MIDIHeader::formatType()
 
 int MIDIHeader::timeDivisions()
 {
-  #warning "MIDIHeader::timeDivisions() is unimplemented"
   return _timeDivisions;
+}
+
+unsigned int MIDIHeader::ticksPerBeat()
+{
+  if( 0x8000 & _timeDivisions ) return 0;
+  
+  return (0x7FFF & _timeDivisions);
+}
+
+unsigned int MIDIHeader::framesPerSecond()
+{
+  if( !(0x8000 & _timeDivisions) ) return 0;
+  
+  return (0x7F00 & _timeDivisions);
+}
+
+unsigned int MIDIHeader::ticksPerFrame()
+{
+  if( !(0x8000 & _timeDivisions) ) return 0;
+  
+  return (0x00FF & _timeDivisions);
 }
