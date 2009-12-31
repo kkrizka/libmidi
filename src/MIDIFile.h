@@ -31,6 +31,15 @@ public:
    */
   MIDIFile(string path);
 
+  //! Change the MIDI file
+  /*!
+   * This function does nothing other than change the path.
+   * Use MIDIFile::open() or MIDIFile::write() to do something.
+   *
+   * \param path Path to new MIDI file
+   */
+  void setPath(string path);
+  
   //! Parse the MIDI file
   /*!
    * Opens and extracs header and tracks from the midi file specified in the constructor
@@ -38,6 +47,14 @@ public:
    * \return False if there were problems, true otherwise.
    */
   bool open();
+
+  //! Save to MIDI file
+  /*!
+   * Writes out the header and tracks to the midi file specified in the constructor
+   *
+   * \return False if there were problems, true otherwise
+   */
+  bool write();
 
   /*!
    * \return The header chunk

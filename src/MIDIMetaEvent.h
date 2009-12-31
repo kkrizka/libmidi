@@ -33,6 +33,11 @@ public:
    */
   byte metaType();
 
+  /*!
+   * \return This meta event represented as data in a MIDI file
+   */
+  virtual MIDIDataBuffer data();
+
   //! Print debug information
   virtual void debug();
 

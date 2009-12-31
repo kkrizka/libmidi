@@ -6,10 +6,14 @@
 #include "MIDIMetaNumberEvent.h"
 #include "MIDIDefines.h"
 
+#include <iostream>
+#include <iomanip>
+using namespace std;
+
 MIDITrack::MIDITrack(byte* data,dword size)
-  : MIDIChunk(data,size),_data(data),_size(size),_pos(0)
+  : _data(data),_size(size),_pos(0)
 {
-  byte lastMIDIType;
+  byte lastMIDICommand;
   int lastChannel;
 
   while(_pos<_size)
@@ -23,10 +27,10 @@ MIDITrack::MIDITrack(byte* data,dword size)
 	  {
 	    byte type=readNextByte();
 	    dword length=readNextVariableLength();
-	    byte data[length];
+	    byte metaData[length];
 	    for(int i=0;i<length;i++)
 	      {
-		data[i]=readNextByte();
+		metaData[i]=readNextByte();
 	      }
 
 	    MIDIMetaEvent *event;
@@ -36,28 +40,26 @@ MIDITrack::MIDITrack(byte* data,dword size)
 	      case MIDI_METAEVENT_COPYRIGHT:
 	      case MIDI_METAEVENT_TRACKNAME:
 	      case MIDI_METAEVENT_MAKER:
-		event=new MIDIMetaTextEvent(deltaTime,type,data,length);
+		event=new MIDIMetaTextEvent(deltaTime,type,metaData,length);
 		break;
 	      case MIDI_METAEVENT_SETTEMPO:
-		event=new MIDIMetaNumberEvent(deltaTime,type,data,length);
+		event=new MIDIMetaNumberEvent(deltaTime,type,metaData,length);
 		break;
 	      default:
-		event=new MIDIMetaGenericEvent(deltaTime,type,data,length);
+		event=new MIDIMetaGenericEvent(deltaTime,type,metaData,length);
 		break;
 	      }
 	    _events.push_back(event);
-
-	    //handleMetaEvent(type,data,length);
 	  }
 	  break;
 	case 0xF0: // System Exclusive Events
 	case 0xF7:
 	  {
 	    dword length=readNextVariableLength();
-	    byte data[length];
+	    byte sysData[length];
 	    for(int i=0;i<length;i++)
 	      {
-		data[i]=readNextByte();
+		sysData[i]=readNextByte();
 	      }
 	    #warning "System Exclusive events are unimplemented"
 	    // IGNORE
@@ -65,7 +67,7 @@ MIDITrack::MIDITrack(byte* data,dword size)
 	  break;
 	default:
 	  { // Everything else is a channel event
-	    byte type;
+	    byte command;
 	    int channel;
 	    byte param1;
 	    byte param2;
@@ -78,7 +80,7 @@ MIDITrack::MIDITrack(byte* data,dword size)
 		 * 1 byte:param1
 		 * 1 byte:param2
 		 */
-		type=(0xF0&eventType)>>4;
+		command=(0xF0&eventType)>>4;
 		channel=(int)(0x0F & eventType);
 		param1=readNextByte();
 		param2=readNextByte();
@@ -90,7 +92,7 @@ MIDITrack::MIDITrack(byte* data,dword size)
 		 * 1 byte:param1
 		 * 1 byte:param2
 		 */
-		type=lastMIDIType;
+		command=lastMIDICommand;
 		channel=lastChannel;
 		param1=eventType;
 		param2=readNextByte();
@@ -98,14 +100,14 @@ MIDITrack::MIDITrack(byte* data,dword size)
 
 	    // Store the event
 	    MIDIChannelEvent *event=0;
-	    if(type==MIDI_CHEVENT_CONTROLLER)
+	    if(command==MIDI_CHEVENT_CONTROLLER)
 	      event=new MIDIChannelControllerEvent(deltaTime,channel,param1,param2);
 	    else
-	      event=new MIDIChannelEvent(deltaTime,type,channel,param1,param2);
+	      event=new MIDIChannelEvent(deltaTime,command,channel,param1,param2);
 
 	    _events.push_back(event);
 
-	    lastMIDIType=type;
+	    lastMIDICommand=command;
 	    lastChannel=channel;
 	  }
 	  break;
@@ -148,4 +150,33 @@ byte MIDITrack::readNextByte()
   byte result=_data[_pos];
   _pos++;
   return result;
+}
+
+MIDIDataBuffer MIDITrack::data()
+{
+  MIDIDataBuffer data(1000000);
+
+  byte lastCommand=MIDI_CHEVENT_INVALID;
+
+  for(int i=0;i<_events.size();i++)
+    {
+      MIDIDataBuffer eventData;
+      if(_events[i]->type()==MIDI_CHEVENT)
+	{
+	  MIDIChannelEvent *chevent=(MIDIChannelEvent*)_events[i];
+	  cout << "Command 0x" << setbase(16) << (unsigned int)chevent->command() << endl;
+	  if(chevent->command()==lastCommand)
+	    eventData=chevent->data(true);
+	  else
+	    eventData=chevent->data(false);
+
+	  lastCommand=chevent->command();
+	}
+      else
+	eventData=_events[i]->data();
+	
+      data.write(eventData);
+    }
+
+  return data;
 }

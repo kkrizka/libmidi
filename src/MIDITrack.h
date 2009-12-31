@@ -41,6 +41,11 @@ public:
    */
   MIDIEvent* event(unsigned int id);
 
+  /*!
+   * \return This track represented as data in a MIDI file
+   */
+  MIDIDataBuffer data();
+
 private:
   dword readNextVariableLength();
   byte readNextByte();

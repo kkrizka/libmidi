@@ -20,6 +20,13 @@ dword MIDIEvent::deltaTime()
   return _deltaTime;
 }
 
+MIDIDataBuffer MIDIEvent::data()
+{
+  MIDIDataBuffer data(10000);
+  data.writeVariableLength(_deltaTime);
+  return data;
+}
+
 void MIDIEvent::debug()
 {
   cout << "\tMIDI Event" << endl;

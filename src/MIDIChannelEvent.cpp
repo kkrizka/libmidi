@@ -43,6 +43,23 @@ int MIDIChannelEvent::param2()
   return _param2;
 }
 
+MIDIDataBuffer MIDIChannelEvent::data(bool shorten)
+{
+  MIDIDataBuffer data=MIDIEvent::data();
+
+  if(!shorten)
+    {
+      byte typething=_command;
+      typething=(typething<<4);
+      typething+=_channel;
+      data.write(typething);
+    }
+  data.write(_param1);
+  data.write(_param2);
+
+  return data;
+}
+
 void MIDIChannelEvent::debug()
 {
   switch(_command)

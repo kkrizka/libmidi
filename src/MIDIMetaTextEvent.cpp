@@ -29,6 +29,19 @@ string MIDIMetaTextEvent::text()
   return _text;
 }
 
+MIDIDataBuffer MIDIMetaTextEvent::data()
+{
+  MIDIDataBuffer data=MIDIMetaEvent::data();
+
+  data.writeVariableLength(_text.length());
+  for(int i=0;i<_text.length();i++)
+    {
+      data.write(_text[i]);
+    }
+
+  return data;
+}
+
 void MIDIMetaTextEvent::debug()
 {
   switch(metaType())

@@ -52,6 +52,12 @@ public:
    */
   int param2();
 
+  /*!
+   * \param shorten Whether to not include the command and channel
+   * \return This meta event represented as data in a MIDI file
+   */
+  virtual MIDIDataBuffer data(bool shorten=false);
+
   virtual void debug();
 
 private:

@@ -17,6 +17,12 @@
 class MIDIHeader : public MIDIChunk
 {
 public:
+  //! Default constructor
+  /*!
+   * Creates an empty MIDI header with all properties set to 0
+   */
+  MIDIHeader();
+
   //! Constructor
   /*!
    * Parses the array data to determine the contents of the header. The data is the 
@@ -79,9 +85,15 @@ public:
    */
   unsigned int ticksPerFrame();
 
+  /*!
+   * \return This header represented as data in a MIDI file
+   */
+  MIDIDataBuffer data();
+   
+
 private:
   int _formatType;
-  int _nTracks;
+  int _numTracks;
   int _timeDivisions;
 };
 

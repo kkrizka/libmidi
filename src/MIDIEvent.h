@@ -4,6 +4,7 @@
 #include "types.h"
 
 #include "MIDIDefines.h"
+#include "MIDIDataBuffer.h"
 
 //! An event inside a track
 /*!
@@ -37,6 +38,11 @@ public:
    */
   virtual MIDIEventType type() =0;
 
+  /*!
+   * \return This event represented as data in a MIDI file
+   */
+  virtual MIDIDataBuffer data();
+  
   //! Prints out information about this event. Is for debug purposes.
   virtual void debug();
 

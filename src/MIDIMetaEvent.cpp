@@ -28,6 +28,16 @@ byte MIDIMetaEvent::metaType()
   return _metaType;
 }
 
+MIDIDataBuffer MIDIMetaEvent::data()
+{
+  MIDIDataBuffer data=MIDIEvent::data();
+
+  data.write(0xFF);
+  data.write(metaType());
+
+  return data;
+}
+
 void MIDIMetaEvent::debug()
 { 
   cout << "\tInvalid Meta Event 0x" << setbase(16) << (unsigned int)_metaType << endl;

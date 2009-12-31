@@ -33,6 +33,17 @@ dword byte2dword(byte array[])
   return result;
 }
 
+byte* dword2byte(dword var)
+{
+  byte* result=new byte[4];
+  for(int i=3;i>=0;i--)
+    {
+      result[i]=var & 0x000000FF;
+      var=(var>>8);
+    }
+  return result;
+}
+
 word byte2word(byte array[])
 {
   word result=0;
@@ -42,5 +53,16 @@ word byte2word(byte array[])
       result+=array[i];
     }
 
+  return result;
+}
+
+byte* word2byte(word var)
+{
+  byte* result=new byte[2];
+  for(int i=1;i>=0;i--)
+    {
+      result[i]=var & 0x00FF;
+      var=(var>>8);
+    }
   return result;
 }

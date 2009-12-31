@@ -44,6 +44,11 @@ public:
    */   
   unsigned int paramUInt(int id);
 
+  /*!
+   * \return This meta event represented as data in a MIDI file
+   */
+  virtual MIDIDataBuffer data();
+
   //! Prints debug information
   virtual void debug();
 

@@ -4,17 +4,22 @@
 #include <iomanip>
 using namespace std;
 
+MIDIHeader::MIDIHeader()
+  : MIDIChunk(),_formatType(0),_numTracks(0),_timeDivisions(0)
+{ }
+
+
 MIDIHeader::MIDIHeader(byte* data,dword size)
-  : MIDIChunk(data,size),_formatType(0),_nTracks(0),_timeDivisions(0)
+  : MIDIChunk(),_formatType(0),_numTracks(0),_timeDivisions(0)
 {
   _formatType=byte2word(data);
-  _nTracks=byte2word(data+2);
+  _numTracks=byte2word(data+2);
   _timeDivisions=byte2word(data+4);
 }
 
 int MIDIHeader::numTracks()
 {
-  return _nTracks;
+  return _numTracks;
 }
 
 int MIDIHeader::formatType()
@@ -46,4 +51,15 @@ unsigned int MIDIHeader::ticksPerFrame()
   if( !(0x8000 & _timeDivisions) ) return 0;
   
   return (0x00FF & _timeDivisions);
+}
+
+MIDIDataBuffer MIDIHeader::data()
+{
+  MIDIDataBuffer data(6);
+
+  data.write(word2byte(_formatType),2);
+  data.write(word2byte(_numTracks),2);
+  data.write(word2byte(_timeDivisions),2);
+
+  return data;
 }

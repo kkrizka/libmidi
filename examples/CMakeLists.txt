@@ -1,1 +1,2 @@
 ADD_SUBDIRECTORY(mididump)
+ADD_SUBDIRECTORY(midiscale)

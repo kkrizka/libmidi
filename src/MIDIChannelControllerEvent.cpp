@@ -15,7 +15,7 @@ MIDIChannelControllerEvent::MIDIChannelControllerEvent(const MIDIChannelControll
 { }
 
 MIDIChannelControllerEvent::MIDIChannelControllerEvent(dword deltaTime,int channel,int controllertype,int value)
-  : MIDIChannelEvent(deltaTime,channel,MIDI_CHEVENT_CONTROLLER,controllertype,value),_controllertype(controllertype),_value(value)
+  : MIDIChannelEvent(deltaTime,MIDI_CHEVENT_CONTROLLER,channel,controllertype,value),_controllertype(controllertype),_value(value)
 { }
 
 int MIDIChannelControllerEvent::controllerType()

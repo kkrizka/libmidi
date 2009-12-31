@@ -32,6 +32,11 @@ public:
    */
   string text();
 
+  /*!
+   * \return This meta text event represented as data in a MIDI file
+   */
+  virtual MIDIDataBuffer data();
+
   //! Print debug information
   virtual void debug();
 

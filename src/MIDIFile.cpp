@@ -9,11 +9,18 @@ using namespace std;
 #include "MIDIHeader.h"
 #include "MIDITrack.h"
 
+#include "MIDIDataBuffer.h"
+
 #include "types.h"
 
 MIDIFile::MIDIFile(string path)
-  : _path(path),_header(0)
+  : _path(path),_header(new MIDIHeader())
 { }
+
+void MIDIFile::setPath(string path)
+{
+  _path=path;
+}
 
 unsigned int MIDIFile::numTracks()
 {
@@ -64,6 +71,7 @@ bool MIDIFile::open()
   ifstream fh(_path.c_str(),ios::in | ios::binary);
   if(!fh.is_open()) return false; //Error check
 
+  delete _header;
   _header=(MIDIHeader*)readChunk(fh);
 
   for(int i=0;i<_header->numTracks();i++)
@@ -74,4 +82,32 @@ bool MIDIFile::open()
 
   fh.close();
   return true;
+}
+
+bool MIDIFile::write()
+{
+  ofstream fh(_path.c_str(),ios::out | ios::binary);
+  if(!fh.is_open()) return false; //Error check
+  cout << "SAVE" << endl;
+
+  MIDIDataBuffer headerData=_header->data();
+  cout << "Header data size: " << headerData.size() << endl;
+  
+  fh.write("MThd",4);
+  fh.write((char*)dword2byte(headerData.size()),4);
+  fh.write((char*)headerData.data(),headerData.size());
+  
+  for(int i=0;i<_header->numTracks();i++)
+    {
+      MIDITrack* track=_tracks[i];
+      MIDIDataBuffer trackData=track->data();
+
+      fh.write("MTrk",4);
+      fh.write((char*)dword2byte(trackData.size()),4);
+      fh.write((char*)trackData.data(),trackData.size());
+    }
+
+  fh.close();
+  return true;
+ 
 }

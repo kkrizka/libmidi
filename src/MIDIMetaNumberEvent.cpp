@@ -7,17 +7,17 @@
 using namespace std;
 
 MIDIMetaNumberEvent::MIDIMetaNumberEvent()
-  : MIDIMetaEvent()
+  : MIDIMetaEvent(),_number(0),_length(0)
 { }
 
 MIDIMetaNumberEvent::MIDIMetaNumberEvent(const MIDIMetaNumberEvent& o)
-  : MIDIMetaEvent(o),_number(o._number)
+  : MIDIMetaEvent(o),_number(o._number),_length(o._length)
 { }
 
 MIDIMetaNumberEvent::MIDIMetaNumberEvent(dword deltaTime,byte metaType,byte data[],dword length)
-  : MIDIMetaEvent(deltaTime,metaType),_number(0)
+  : MIDIMetaEvent(deltaTime,metaType),_number(0),_length(length)
 { 
-  for(int i=0;i<length;i++)
+  for(int i=0;i<_length;i++)
     {
       _number=(_number<<8);
       _number+=(unsigned int)data[i];
@@ -27,6 +27,27 @@ MIDIMetaNumberEvent::MIDIMetaNumberEvent(dword deltaTime,byte metaType,byte data
 unsigned int MIDIMetaNumberEvent::number()
 {
   return _number;
+}
+
+MIDIDataBuffer MIDIMetaNumberEvent::data()
+{
+  MIDIDataBuffer data=MIDIMetaEvent::data();
+ 
+  // Calculate number of needed bytes
+  unsigned int num=_number;
+
+  data.write(_length);
+
+  byte bytedata[_length];
+  for(int i=0;i<_length;i++)
+    {
+      bytedata[_length-1-i]=(num & 0xFF);
+      num=(num>>8);
+    }
+  
+  data.write(bytedata,_length);
+
+  return data;
 }
 
 void MIDIMetaNumberEvent::debug()

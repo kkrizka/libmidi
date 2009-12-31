@@ -3,6 +3,8 @@
 
 #include "types.h"
 
+#include "MIDIDataBuffer.h"
+
 /*!
  * MIDI files are made out of chunks. This represents one chunk.
  * A chunk contains the following information:
@@ -21,11 +23,12 @@ class MIDIChunk
 {
 public:
   //! Constructor
+  MIDIChunk();
+
   /*!
-   * \param data The data
-   * \param size Number of bytes of data
+   * \return data to be written out
    */
-  MIDIChunk(byte* data, dword size);
+  virtual MIDIDataBuffer data();
 };
 
 #endif // MIDICHUNK_H_

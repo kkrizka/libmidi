@@ -1,4 +1,9 @@
 #include "MIDIChunk.h"
 
-MIDIChunk::MIDIChunk(byte* data, dword size)
+MIDIChunk::MIDIChunk()
 { }
+
+MIDIDataBuffer MIDIChunk::data()
+{
+  return 0;
+}

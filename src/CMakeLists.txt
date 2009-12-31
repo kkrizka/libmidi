@@ -1,6 +1,7 @@
 PROJECT(libmidireader)
 
 SET(libmidireader_SRCS
+  MIDIDataBuffer.cpp
   MIDIFile.cpp 
   MIDIChunk.cpp  
   MIDIHeader.cpp
@@ -18,6 +19,8 @@ SET(libmidireader_HEADERS
   MIDIReader.h
 
   MIDIDefines.h
+
+  MIDIDataBuffer.h
 
   MIDIFile.h 
   MIDIChunk.h  
