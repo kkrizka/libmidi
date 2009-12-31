@@ -7,20 +7,25 @@
 using namespace std;
 
 MIDIChannelEvent::MIDIChannelEvent()
-  : MIDIEvent(0),_type(0),_channel(0),_param1(0),_param2(0)
+  : MIDIEvent(0),_command(0),_channel(0),_param1(0),_param2(0)
 { }
 
 MIDIChannelEvent::MIDIChannelEvent(const MIDIChannelEvent& o)
-  : MIDIEvent(o),_type(o._type),_channel(o._channel),_param1(o._param1),_param2(o._param2)
+  : MIDIEvent(o),_command(o._command),_channel(o._channel),_param1(o._param1),_param2(o._param2)
 { }
 
-MIDIChannelEvent::MIDIChannelEvent(dword timeDelta,byte type,int channel,int param1,int param2)
-  : MIDIEvent(timeDelta),_type(type),_channel(channel),_param1(param1),_param2(param2)
+MIDIChannelEvent::MIDIChannelEvent(dword timeDelta,byte command,int channel,int param1,int param2)
+  : MIDIEvent(timeDelta),_command(command),_channel(channel),_param1(param1),_param2(param2)
 { }
 
-byte MIDIChannelEvent::type()
+MIDIEventType MIDIChannelEvent::type()
 {
-  return _type;
+  return MIDI_CHEVENT;
+}
+
+byte MIDIChannelEvent::command()
+{
+  return _command;
 }
 
 int MIDIChannelEvent::channel()
@@ -40,7 +45,7 @@ int MIDIChannelEvent::param2()
 
 void MIDIChannelEvent::debug()
 {
-  switch(_type)
+  switch(_command)
     {
     case MIDI_CHEVENT_INVALID:
       cout << "\tInvalid MIDI Channel Event" << endl;
@@ -77,7 +82,7 @@ void MIDIChannelEvent::debug()
       break;
     default:
       cout << "\tUnknown MIDI Channel Event" << endl;
-      cout << "\t\tType: 0x" << setbase(16) << (unsigned int)_type << endl;
+      cout << "\t\tCommand: 0x" << setbase(16) << (unsigned int)_command << endl;
       cout << "\t\tChannel: " << setbase(10) << _channel << endl;
       cout << "\t\tParam 1: 0x" << setbase(16) << _param1 << endl;
       cout << "\t\tParam 2: 0x" << setbase(16) << _param2 << endl;

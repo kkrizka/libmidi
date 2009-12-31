@@ -18,7 +18,7 @@ int main(int argc,char* argv[])
 
   cout << "Header" << endl;
   cout << "\tFormat Type: " << header->formatType() << endl;
-  cout << "\tNumber of Tracks: " << header->nTracks() << endl;
+  cout << "\tNumber of Tracks: " << header->numTracks() << endl;
   
   if(header->framesPerSecond())
     {

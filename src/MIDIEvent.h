@@ -3,6 +3,8 @@
 
 #include "types.h"
 
+#include "MIDIDefines.h"
+
 //! An event inside a track
 /*!
  * A MIDI track is made out of events. This class is an abstract event.
@@ -25,20 +27,26 @@
 class MIDIEvent
 {
 public:
+  /*!
+   * \return Number of ticks to wait after previous event to execute this one.
+   */
+  dword deltaTime();
+
+  /*!
+   * \return The type (meta,channel,system) that this event is
+   */
+  virtual MIDIEventType type() =0;
+
+  //! Prints out information about this event. Is for debug purposes.
+  virtual void debug();
+
+protected:
   //! Empty constructor
   MIDIEvent();
   //! Copy constructor
   MIDIEvent(const MIDIEvent& o);
   //! Contructor
   MIDIEvent(dword deltaTime);
-
-  /*!
-   * \return Number of ticks to wait after previous event to execute this one.
-   */
-  dword deltaTime();
-
-  //! Prints out information about this event. Is for debug purposes.
-  virtual void debug();
 
 private:
   dword _deltaTime;

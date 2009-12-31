@@ -12,7 +12,7 @@ MIDIHeader::MIDIHeader(byte* data,dword size)
   _timeDivisions=byte2word(data+4);
 }
 
-int MIDIHeader::nTracks()
+int MIDIHeader::numTracks()
 {
   return _nTracks;
 }

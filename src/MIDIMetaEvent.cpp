@@ -18,6 +18,11 @@ MIDIMetaEvent::MIDIMetaEvent(dword deltaTime,byte metaType)
   : MIDIEvent(deltaTime),_metaType(metaType)
 { }
 
+MIDIEventType MIDIMetaEvent::type()
+{
+  return MIDI_METAEVENT;
+}
+
 byte MIDIMetaEvent::metaType()
 { 
   return _metaType;

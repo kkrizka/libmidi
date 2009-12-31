@@ -24,6 +24,11 @@ public:
   MIDIMetaEvent(dword deltaTime,byte metatype);
 
   /*!
+   * \return MIDI_METAEVENT, since this is a channel event
+   */
+  MIDIEventType type();
+
+  /*!
    * \return The type of the meta event. See MIDI specification
    */
   byte metaType();

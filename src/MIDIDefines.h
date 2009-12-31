@@ -1,6 +1,13 @@
 #ifndef MIDIDEFINES_H_
 #define MIDIDEFINES_H_
 
+enum MIDIEventType
+  {
+    MIDI_METAEVENT,
+    MIDI_CHEVENT,
+    MIDI_SYSEXEVENT
+  };
+
 // Meta event types
 #define MIDI_METAEVENT_INVALID 0x0
 #define MIDI_METAEVENT_TEXT 0x1

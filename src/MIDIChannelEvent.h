@@ -25,12 +25,17 @@ public:
   MIDIChannelEvent(dword timeDelta,byte type,int channel,int param1,int param2);
 
   /*!
-   * Type or command that this event represents. See MIDI specification for
+   * \return MIDI_CHEVENT, since this is a channel event
+   */
+  MIDIEventType type();
+
+  /*!
+   * Command that this event represents. See MIDI specification for
    * a complete list of possible values.
    *
    * \return type or command
    */
-  byte type();
+  byte command();
 
   /*!
    * \return Channel number that this event applies to
@@ -50,7 +55,7 @@ public:
   virtual void debug();
 
 private:
-  byte _type;
+  byte _command;
   int _channel;
   int _param1;
   int _param2;

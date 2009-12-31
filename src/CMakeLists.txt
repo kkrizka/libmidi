@@ -17,6 +17,8 @@ SET(libmidireader_SRCS
 SET(libmidireader_HEADERS
   MIDIReader.h
 
+  MIDIDefines.h
+
   MIDIFile.h 
   MIDIChunk.h  
   MIDIHeader.h
@@ -38,4 +40,4 @@ INSTALL(TARGETS midireader
   LIBRARY DESTINATION lib)
 
 INSTALL(FILES ${libmidireader_HEADERS}
-  DESTINATION include/midireader)
+  DESTINATION include/libmidireader)

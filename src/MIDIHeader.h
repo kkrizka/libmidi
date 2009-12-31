@@ -44,7 +44,7 @@ public:
   /*!
    * \return Number of tracks in the MIDI file
    */
-  int nTracks();
+  int numTracks();
 
   /*!
    * Used for translating the time deltas in events into real times. It can be stored

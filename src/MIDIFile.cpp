@@ -66,7 +66,7 @@ bool MIDIFile::open()
 
   _header=(MIDIHeader*)readChunk(fh);
 
-  for(int i=0;i<_header->nTracks();i++)
+  for(int i=0;i<_header->numTracks();i++)
     {
       MIDITrack* track=(MIDITrack*)readChunk(fh);
       _tracks.push_back(track);
