@@ -31,7 +31,13 @@ int main(int argc,char* argv[])
       track->addEvent(new MIDIChannelEvent(100,MIDI_CHEVENT_NOTEOFF,0,i,0));
     }
 
-  track->addEvent(new MIDIMetaEvent(25,MIDI_METAEVENT_ENDOFTRACK));
+  for(int i=127;i>=0;i--)
+    { 
+      track->addEvent(new MIDIChannelEvent(0,MIDI_CHEVENT_NOTEON,0,i,100));
+      track->addEvent(new MIDIChannelEvent(100,MIDI_CHEVENT_NOTEOFF,0,i,0));
+    }
+
+  track->addEvent(new MIDIMetaGenericEvent(25,MIDI_METAEVENT_ENDOFTRACK,0));
 
   file.addTrack(track);
 
