@@ -60,10 +60,17 @@ public:
    * \return The header chunk
    */
   MIDIHeader* header();
+
   /*!
    * \return The idth track chunk
    */
   MIDITrack* track(unsigned int id);
+
+  /*!
+   * Append a new track to the end of the track list
+   * \param track Track to append
+   */
+  void addTrack(MIDITrack* track);
 
   /*!
    * \return Number of tracks found in this MIDI file

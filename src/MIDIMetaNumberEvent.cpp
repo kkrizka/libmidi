@@ -14,6 +14,10 @@ MIDIMetaNumberEvent::MIDIMetaNumberEvent(const MIDIMetaNumberEvent& o)
   : MIDIMetaEvent(o),_number(o._number),_length(o._length)
 { }
 
+MIDIMetaNumberEvent::MIDIMetaNumberEvent(dword deltaTime,byte metaType,dword length,unsigned int value)
+  : MIDIMetaEvent(deltaTime,metaType),_number(value),_length(length)
+{ }
+
 MIDIMetaNumberEvent::MIDIMetaNumberEvent(dword deltaTime,byte metaType,byte data[],dword length)
   : MIDIMetaEvent(deltaTime,metaType),_number(0),_length(length)
 { 

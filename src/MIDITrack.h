@@ -20,6 +20,12 @@ using namespace std;
 class MIDITrack : public MIDIChunk
 {
 public:
+  //! Default Constructor
+  /*!
+   * Creates an empty track with 0 events
+   */
+  MIDITrack();
+
   //! Constructor
   /*!
    * Parses data for events and stores them.
@@ -40,6 +46,14 @@ public:
    * \return Event number id
    */
   MIDIEvent* event(unsigned int id);
+
+  /*!
+   * Add a new event to the end of the track
+   *
+   * \param event New event
+   */
+  void addEvent(MIDIEvent* event);
+
 
   /*!
    * \return This track represented as data in a MIDI file

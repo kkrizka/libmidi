@@ -22,7 +22,7 @@ public:
   //! Copy Constructor
   MIDIChannelEvent(const MIDIChannelEvent& o);
   //! Constructor
-  MIDIChannelEvent(dword timeDelta,byte type,int channel,int param1,int param2);
+  MIDIChannelEvent(dword timeDelta,byte command,int channel,int param1,int param2);
 
   /*!
    * \return MIDI_CHEVENT, since this is a channel event

@@ -37,6 +37,12 @@ MIDITrack* MIDIFile::track(unsigned int id)
   return _tracks[id];
 }
 
+void MIDIFile::addTrack(MIDITrack* track)
+{
+  _tracks.push_back(track);
+  _header->setNumTracks(_tracks.size());
+}
+
 MIDIChunk* MIDIFile::readChunk(ifstream& fh)
 {
   byte chunkID[5];
@@ -88,10 +94,8 @@ bool MIDIFile::write()
 {
   ofstream fh(_path.c_str(),ios::out | ios::binary);
   if(!fh.is_open()) return false; //Error check
-  cout << "SAVE" << endl;
 
   MIDIDataBuffer headerData=_header->data();
-  cout << "Header data size: " << headerData.size() << endl;
   
   fh.write("MThd",4);
   fh.write((char*)dword2byte(headerData.size()),4);

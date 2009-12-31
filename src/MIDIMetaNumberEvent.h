@@ -22,6 +22,8 @@ public:
   //! Copy Constructor
   MIDIMetaNumberEvent(const MIDIMetaNumberEvent& o);
   //! Constructor
+  MIDIMetaNumberEvent(dword deltaTime,byte metaType,dword length,unsigned int value=0);
+  //! Constructor
   MIDIMetaNumberEvent(dword deltaTime,byte metaType,byte data[],dword length);
 
   /*!
@@ -42,7 +44,7 @@ public:
 private:
   unsigned int _number;
 
-  unsigned int _length;
+  dword _length;
 };
 
 #endif //MIDIMETANUMBEREVENT_H_

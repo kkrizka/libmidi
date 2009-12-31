@@ -30,20 +30,34 @@ MIDIMetaGenericEvent::MIDIMetaGenericEvent(dword deltaTime,byte metaType,byte da
     }
 }
 
+MIDIMetaGenericEvent::MIDIMetaGenericEvent(dword deltaTime,byte metaType,int dataLength)
+  : MIDIMetaEvent(deltaTime,metaType),_data(0),_dataLength(dataLength)
+{
+  _data=new byte[_dataLength];
+  for(int i=0;i<_dataLength;i++)
+    {
+      _data[i]='\0';
+    }
+}
+
 int MIDIMetaGenericEvent::dataLength()
 {
   return _dataLength;
 }
 
-int MIDIMetaGenericEvent::paramInt(int id)
+int MIDIMetaGenericEvent::paramInt(unsigned int id)
 {
   return (int)_data[id];
 }
 
-unsigned int MIDIMetaGenericEvent::paramUInt(int id)
-{
-  
+unsigned int MIDIMetaGenericEvent::paramUInt(unsigned int id)
+{  
   return char2num((char)_data[id]);
+}
+
+void MIDIMetaGenericEvent::setParam(unsigned int id,byte value)
+{
+  _data[id]=value;
 }
 
 MIDIDataBuffer MIDIMetaGenericEvent::data()

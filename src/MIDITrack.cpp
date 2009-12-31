@@ -10,6 +10,9 @@
 #include <iomanip>
 using namespace std;
 
+MIDITrack::MIDITrack()
+{ }
+
 MIDITrack::MIDITrack(byte* data,dword size)
   : _data(data),_size(size),_pos(0)
 {
@@ -125,6 +128,11 @@ MIDIEvent* MIDITrack::event(unsigned int id)
   return _events[id];
 }
 
+void MIDITrack::addEvent(MIDIEvent* event)
+{
+  _events.push_back(event);
+}
+
 dword MIDITrack::readNextVariableLength()
 {
   dword result=0;
@@ -164,7 +172,6 @@ MIDIDataBuffer MIDITrack::data()
       if(_events[i]->type()==MIDI_CHEVENT)
 	{
 	  MIDIChannelEvent *chevent=(MIDIChannelEvent*)_events[i];
-	  cout << "Command 0x" << setbase(16) << (unsigned int)chevent->command() << endl;
 	  if(chevent->command()==lastCommand)
 	    eventData=chevent->data(true);
 	  else

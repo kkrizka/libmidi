@@ -21,7 +21,22 @@ public:
   //! Copy constructor
   MIDIMetaGenericEvent(const MIDIMetaGenericEvent& o);
   //! Constructor
-  MIDIMetaGenericEvent(dword deltaTime,byte type,byte data[],int dataLength);
+  /*!
+   * \param deltaTime
+   * \param metaType
+   * \param data Data that will be initialized
+   * \param data Length Number of data pieces
+   */
+  MIDIMetaGenericEvent(dword deltaTime,byte metaType,byte data[],int dataLength);
+  //! Constructor
+  /*!
+   * Initializes with null data
+   *
+   * \param deltaTime
+   * \param metaType
+   * \param data Length Number of data pieces that will exist
+   */
+  MIDIMetaGenericEvent(dword deltaTime,byte metaType,int dataLength);
 
   /*!
    * \return Number of data fields stored in this event
@@ -34,7 +49,7 @@ public:
    * \param id The id of the data
    * \return The value of the data
    */
-  int paramInt(int id);
+  int paramInt(unsigned int id);
 
   /*!
    * Allows access to data as if it were stores as an unsigned integer.
@@ -42,7 +57,15 @@ public:
    * \param id The id of the data
    * \return The value of the data
    */   
-  unsigned int paramUInt(int id);
+  unsigned int paramUInt(unsigned int id);
+
+  /*!
+   * Set parameter to byte
+   *
+   * \param id The id of the data
+   * \param value What to save
+   */
+  void setParam(unsigned int id,byte value);
 
   /*!
    * \return This meta event represented as data in a MIDI file

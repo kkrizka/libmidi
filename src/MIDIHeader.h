@@ -50,7 +50,14 @@ public:
   /*!
    * \return Number of tracks in the MIDI file
    */
-  int numTracks();
+  unsigned int numTracks();
+
+  /*!
+   * Set the number of tracks in the MIDI file
+   * \param numTracks New value
+   */
+  void setNumTracks(unsigned int numTracks);
+
 
   /*!
    * Used for translating the time deltas in events into real times. It can be stored
@@ -73,10 +80,23 @@ public:
   unsigned int ticksPerBeat();
 
   /*!
+   * Number of time delta positions per quarter note of music
+   *
+   * \param ticksPerBeat ticks per beat
+   */
+  void setTicksPerBeat(unsigned int ticksPerBeat);
+
+  /*!
    * \see MIDIHeader::ticksPerFrame()
    * \return Frames per second, 0 if defined as ticks per beat
    */
   unsigned int framesPerSecond();
+
+  //! Set frames per second
+  /*!
+   * \param framesPerSecond
+   */
+  void setFramesPerSecond(unsigned int setFramesPerSecond);
 
   /*!
    * Ticks per frame, when timing is defined as frames per second.
@@ -86,6 +106,12 @@ public:
   unsigned int ticksPerFrame();
 
   /*!
+   * \see MIDIHeader::setFramesPerSecond()
+   * \param ticksPerFrame 
+   */
+  void setTicksPerFrame(unsigned int ticksPerFrame);
+
+  /*!
    * \return This header represented as data in a MIDI file
    */
   MIDIDataBuffer data();
@@ -93,7 +119,7 @@ public:
 
 private:
   int _formatType;
-  int _numTracks;
+  unsigned int _numTracks;
   int _timeDivisions;
 };
 
