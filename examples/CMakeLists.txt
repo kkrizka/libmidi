@@ -1,2 +1,3 @@
 ADD_SUBDIRECTORY(mididump)
 ADD_SUBDIRECTORY(midiscale)
+ADD_SUBDIRECTORY(randommusic)
