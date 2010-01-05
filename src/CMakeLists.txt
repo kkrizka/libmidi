@@ -1,46 +1,46 @@
-PROJECT(libmidireader)
+PROJECT(libmidi)
 
-SET(libmidireader_SRCS
-  MIDIDataBuffer.cpp
-  MIDIFile.cpp 
-  MIDIChunk.cpp  
-  MIDIHeader.cpp
-  MIDITrack.cpp
-  MIDIEvent.cpp
-  MIDIChannelEvent.cpp 
-  MIDIChannelControllerEvent.cpp
-  MIDIMetaEvent.cpp 
-  MIDIMetaGenericEvent.cpp
-  MIDIMetaTextEvent.cpp
-  MIDIMetaNumberEvent.cpp 
+SET(libmidi_SRCS
+  DataBuffer.cpp
+  File.cpp 
+  Chunk.cpp  
+  Header.cpp
+  Track.cpp
+  Event.cpp
+  ChannelEvent.cpp 
+  ChannelControllerEvent.cpp
+  MetaEvent.cpp 
+  MetaGenericEvent.cpp
+  MetaTextEvent.cpp
+  MetaNumberEvent.cpp 
   types.cpp )
 
-SET(libmidireader_HEADERS
-  MIDIReader.h
+SET(libmidi_HEADERS
+  MIDI.h
 
-  MIDIDefines.h
+  Defines.h
 
-  MIDIDataBuffer.h
+  DataBuffer.h
 
-  MIDIFile.h 
-  MIDIChunk.h  
-  MIDIHeader.h
-  MIDITrack.h
-  MIDIEvent.h
-  MIDIChannelEvent.h 
-  MIDIChannelControllerEvent.h
-  MIDIMetaEvent.h 
-  MIDIMetaGenericEvent.h
-  MIDIMetaTextEvent.h
-  MIDIMetaNumberEvent.h 
+  File.h 
+  Chunk.h  
+  Header.h
+  Track.h
+  Event.h
+  ChannelEvent.h 
+  ChannelControllerEvent.h
+  MetaEvent.h 
+  MetaGenericEvent.h
+  MetaTextEvent.h
+  MetaNumberEvent.h 
 
   types.h
   )
 
-ADD_LIBRARY(midireader SHARED ${libmidireader_SRCS})
+ADD_LIBRARY(midi SHARED ${libmidi_SRCS})
 
-INSTALL(TARGETS midireader
+INSTALL(TARGETS midi
   LIBRARY DESTINATION lib)
 
-INSTALL(FILES ${libmidireader_HEADERS}
-  DESTINATION include/libmidireader)
+INSTALL(FILES ${libmidi_HEADERS}
+  DESTINATION include/libmidi)

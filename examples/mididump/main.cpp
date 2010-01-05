@@ -1,4 +1,4 @@
-#include "MIDIReader.h"
+#include "MIDI.h"
 
 #include <iostream>
 #include <iomanip>
@@ -11,10 +11,10 @@ int main(int argc,char* argv[])
       cerr << "usage: " << argv[0] << " midifile.mid" << endl;
       return -1;
     }
-  MIDIFile mid(argv[1]);
+  MIDI::File mid(argv[1]);
   mid.open();
 
-  MIDIHeader* header=mid.header();
+  MIDI::Header* header=mid.header();
 
   cout << "Header" << endl;
   cout << "\tFormat Type: " << header->formatType() << endl;
@@ -30,12 +30,12 @@ int main(int argc,char* argv[])
 
   for(int i=0;i<mid.numTracks();i++)
     {
-      MIDITrack* track=mid.track(i);
+      MIDI::Track* track=mid.track(i);
       cout << "Track #" << i+1 << endl;
       
       for(int j=0;j<track->numEvents();j++)
 	{
-	  MIDIEvent* event=track->event(j);
+	  MIDI::Event* event=track->event(j);
 	  event->debug();
 	}
     }

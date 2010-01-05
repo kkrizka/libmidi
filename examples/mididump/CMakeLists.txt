@@ -8,4 +8,4 @@ LINK_DIRECTORIES(../../src)
 
 
 ADD_EXECUTABLE(mididump ${mididump_SRCS})
-TARGET_LINK_LIBRARIES(mididump midireader)
+TARGET_LINK_LIBRARIES(mididump midi)

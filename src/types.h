@@ -31,7 +31,7 @@ dword byte2dword(byte array[]);
 
 //! Concatonates 1 variable into 4 byte-long variables
 /*!
- * \param Some variable
+ * \param var Some variable
  * \return Array of bytes that var was split into
  */
 byte* dword2byte(dword var);
@@ -45,7 +45,7 @@ word byte2word(byte array[]);
 
 //! Concatonates 1 variable into 2 byte-long variables
 /*!
- * \param Some variable
+ * \param var Some variable
  * \return Array of bytes that var was split into
  */
 byte* word2byte(word var);

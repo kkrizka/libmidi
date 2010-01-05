@@ -8,4 +8,4 @@ LINK_DIRECTORIES(../../src)
 
 
 ADD_EXECUTABLE(midiscale ${midiscale_SRCS})
-TARGET_LINK_LIBRARIES(midiscale midireader)
+TARGET_LINK_LIBRARIES(midiscale midi)

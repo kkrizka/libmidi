@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-#include "MIDIDataBuffer.h"
+#include "DataBuffer.h"
 
 /*!
  * MIDI files are made out of chunks. This represents one chunk.
@@ -16,19 +16,22 @@
  *
  * None of that information is stored explecitely, although it is
  * stored implicitely in sub-classes.
- * \see MIDIHeader
- * \see MIDITrack
+ * \see MIDI::Header
+ * \see MIDI::Track
  */
-class MIDIChunk
+namespace MIDI
 {
-public:
-  //! Constructor
-  MIDIChunk();
-
-  /*!
-   * \return data to be written out
-   */
-  virtual MIDIDataBuffer data();
-};
+  class Chunk
+  {
+  public:
+    //! Constructor
+    Chunk();
+    
+    /*!
+     * \return data to be written out
+     */
+    virtual DataBuffer data();
+  };
+}
 
 #endif // MIDICHUNK_H_
