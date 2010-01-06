@@ -1,12 +1,12 @@
-libmidireader 0.1
+libmidi 0.1
 Author: Karol Krizka <kkrizka@gmail.com>
 Website: http://www.krizka.net/projects/libmidireader
 
-libmidireader is a very simple library created for reading MIDI files. It is designed to be quick to use and quick to learn. All interaction should be done through the MIDIFile class, which parses a MIDI file. The data inside the MIDIFile class is then organized as if it were a normal MIDI file.
+libmidireader is a very simple library created for reading and writing MIDI files. It is designed to be quick to use and quick to learn. All interaction should be done through the MIDI::File class, which parses a MIDI file. The data inside the MIDI::File class is then organized as if it were a normal MIDI file.
 
-Insallation
+Installation
 --
-libmidireader uses the CMake build system. So to compile it, one has to issue the following commands inside the libmidireader-0.1 directory.
+libmidi uses the CMake build system. So to compile it, one has to issue the following commands inside the libmidireader-0.1 directory.
 
 mkdir build
 cd build
