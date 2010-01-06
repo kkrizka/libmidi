@@ -1,6 +1,6 @@
 libmidi 0.1
 Author: Karol Krizka <kkrizka@gmail.com>
-Website: http://www.krizka.net/projects/libmidireader
+Website: http://www.krizka.net/projects/libmidi
 
 libmidireader is a very simple library created for reading and writing MIDI files. It is designed to be quick to use and quick to learn. All interaction should be done through the MIDI::File class, which parses a MIDI file. The data inside the MIDI::File class is then organized as if it were a normal MIDI file.
 
